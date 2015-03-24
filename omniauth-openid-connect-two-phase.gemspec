@@ -5,7 +5,7 @@ require "omniauth/openid_connect_two_phase/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "omniauth-openid-connect-two-phase"
-  spec.version       = Omniauth::OpenidConnectTwoPhase::VERSION
+  spec.version       = OmniAuth::OpenIDConnectTwoPhase::VERSION
   spec.authors       = ["SchoolKeep Inc.", "Mark Gangl", "Paris Yee"]
   spec.email         = ["dev@schoolkeep.com", "mark@schoolkeep.com", "paris@schoolkeep.com"]
   spec.summary       = %q{Two Phase OpenID Connect Strategy for Omniauth}
@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "omniauth", '~> 1.1'
-  spec.add_dependency "openid_connect", '= 0.7.3'
+  spec.add_dependency "openid_connect", '~> 0.8.3'
   spec.add_dependency "addressable", '~> 2.3'
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"

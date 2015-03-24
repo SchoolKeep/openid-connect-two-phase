@@ -1,6 +1,9 @@
 require "omniauth/openid_connect_two_phase/version"
+require "omniauth/openid_connect_two_phase/errors"
+require "omniauth/strategies/openid_connect_two_phase"
 
-module Omniauth
-  module OpenidConnectTwoPhase
+module OmniAuth
+  module OpenIDConnectTwoPhase
   end
 end
+
