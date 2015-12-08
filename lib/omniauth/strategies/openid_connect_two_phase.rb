@@ -52,7 +52,8 @@ module OmniAuth
 
       extra do
         {
-          raw_info: user_info_hash.raw_attributes
+          raw_info: user_info_hash.raw_attributes,
+          iss: user_info_hash.raw_attributes["iss"]
         }
       end
 
