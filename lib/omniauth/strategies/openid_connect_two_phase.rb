@@ -18,6 +18,7 @@ module OmniAuth
         token_endpoint: "/token"
       }
       option :issuer
+      option :jwks_url
       option :scope, [:openid]
       option :response_type, "code"
       option :display, nil #, [:page, :popup, :touch, :wap]
@@ -119,7 +120,7 @@ module OmniAuth
       end
 
       def decode_id_token(id_token)
-        ::OpenIDConnect::ResponseObject::IdToken.decode(id_token, options.client_options.secret)
+        ::OpenIDConnect::ResponseObject::IdToken.decode(id_token, key_or_secret)
       end
 
       def new_state
@@ -140,6 +141,17 @@ module OmniAuth
 
       def session
         @env.nil? ? {} : super
+      end
+
+      def key_or_secret
+        if options.jwks_url
+          jwks = JSON.parse(
+            OpenIDConnect.http_client.get_content(options.jwks_url)
+          )
+          JSON::JWK::Set.new jwks["keys"]
+        else
+          options.client_options.secret
+        end
       end
 
       class CallbackError < StandardError
