@@ -148,7 +148,12 @@ module OmniAuth
           jwks = JSON.parse(
             OpenIDConnect.http_client.get_content(options.jwks_url)
           )
-          JSON::JWK::Set.new jwks["keys"]
+
+          if jwks["keys"].size == 1
+            JSON::JWK.new(jwks["keys"].first)
+          else
+            JSON::JWK::Set.new(jwks["keys"])
+          end
         else
           options.client_options.secret
         end
