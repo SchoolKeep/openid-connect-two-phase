@@ -144,7 +144,7 @@ module OmniAuth
       end
 
       def key_or_secret
-        if options.jwks_url
+        if options.jwks_url && !options.jwks_url.empty?
           jwks = JSON.parse(
             OpenIDConnect.http_client.get_content(options.jwks_url)
           )
