@@ -108,11 +108,16 @@ module OmniAuth
           client_auth_method: options.client_auth_method
         )
         decoded_id_token = decode_id_token(@access_token.id_token)
-        decoded_id_token.verify!(
+        expected = {
           issuer: options.issuer,
           client_id: options.client_options.identifier,
           nonce: stored_nonce
-        )
+        }
+        Rails.logger.info("OIDC" + "*"*80)
+        Rails.logger.info(decoded_id_token.inspect)
+        Rails.logger.info(expected)
+        Rails.logger.info("/OIDC" + "*"*80)
+        decoded_id_token.verify!(expected)
 
         @user_info_hash = ::OpenIDConnect::ResponseObject::UserInfo.new(
           decoded_id_token.raw_attributes
