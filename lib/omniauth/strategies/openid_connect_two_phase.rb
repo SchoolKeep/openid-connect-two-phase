@@ -28,6 +28,8 @@ module OmniAuth
       uid { user_info_hash.sub }
 
       info do
+        custom_attributes = user_info_hash.raw_attributes.fetch("lms", {})
+
         {
           name: user_info_hash.name,
           email: user_info_hash.email,
@@ -37,7 +39,8 @@ module OmniAuth
           gender: user_info_hash.gender,
           image: user_info_hash.picture,
           phone: user_info_hash.phone_number,
-          urls: { website: user_info_hash.website }
+          urls: { website: user_info_hash.website },
+          groups: custom_attributes["groups"]
         }
       end
 
