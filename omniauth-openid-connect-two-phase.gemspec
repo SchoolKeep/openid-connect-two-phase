@@ -20,8 +20,8 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = ">= 3.0"
 
-  spec.add_dependency "omniauth", '~> 1.1'
-  spec.add_dependency "openid_connect", '1.3.0'
+  spec.add_dependency "omniauth", '~> 2.0'
+  spec.add_dependency "openid_connect", '~> 2.0'
   spec.add_dependency "addressable", '~> 2.3'
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake", "~> 10.0"
