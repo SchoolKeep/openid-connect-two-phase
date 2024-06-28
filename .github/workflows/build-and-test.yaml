@@ -1,0 +1,44 @@
+name: Build and test
+
+on: push
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gitleaks-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run Gitleaks
+        if: ${{ inputs.config-file == '' }}
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+      - name: Run Gitleaks with custom config
+        if: ${{ inputs.config-file != '' }}
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITLEAKS_LICENSE: ${{ inputs.licence }}
+          GITLEAKS_CONFIG: ${{ github.workspace }}/${{ inputs.config-file }}
+  brakeman-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3
+      - name: Install dependencies
+        shell: bash
+        run: gem install brakeman
+      - name: Run Brakeman
+        shell: bash
+        run: brakeman --path ${{ github.workspace }} --force
